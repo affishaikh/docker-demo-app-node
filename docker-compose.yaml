@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+
+  docker-demo-app-node:
+    image: docker-demo-app-node:latest
+    container_name: docker-demo-app-node
+    environment:
+      MONGODB_URL: "mongodb://mongo:27017"
+    ports:
+      - 8080:8080
+    networks:
+      - demo-network
+
+  mongo:
+    image: bitnami/mongodb:4.0
+    container_name: mongo
+    ports:
+      - 27017:27017
+    networks:
+      - demo-network
+    volumes:
+      - 'thanos-volume:/bitnami'
+
+networks:
+  demo-network:
+    name: demo-network
+
+volumes:
+  thanos-volume:
+    name: thanos-volume
